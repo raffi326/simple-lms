@@ -5,7 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Set work directory
-WORKDIR /app
+WORKDIR /app/code
 
 # Install dependencies
 COPY requirements.txt /app/

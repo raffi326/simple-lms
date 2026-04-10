@@ -1,0 +1,339 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "first_name": "Admin",
+      "last_name": "User",
+      "email": "admin@lms.local",
+      "password": "pbkdf2_sha256$600000$abcd1234abcd1234$xyz123xyz123xyz123",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": true,
+      "last_login": null,
+      "date_joined": "2025-01-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "dosen01",
+      "first_name": "Budi",
+      "last_name": "Santoso",
+      "email": "budi@lms.local",
+      "password": "pbkdf2_sha256$600000$abcd1234abcd1234$xyz123xyz123xyz123",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2025-01-05T10:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "dosen02",
+      "first_name": "Siti",
+      "last_name": "Nurhaliza",
+      "email": "siti@lms.local",
+      "password": "pbkdf2_sha256$600000$abcd1234abcd1234$xyz123xyz123xyz123",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2025-01-06T10:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "siswa01",
+      "first_name": "Ahmad",
+      "last_name": "Wijaya",
+      "email": "ahmad@lms.local",
+      "password": "pbkdf2_sha256$600000$abcd1234abcd1234$xyz123xyz123xyz123",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2025-01-10T14:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "username": "siswa02",
+      "first_name": "Retno",
+      "last_name": "Dewi",
+      "email": "retno@lms.local",
+      "password": "pbkdf2_sha256$600000$abcd1234abcd1234$xyz123xyz123xyz123",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2025-01-12T15:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "username": "siswa03",
+      "first_name": "Andi",
+      "last_name": "Kusuma",
+      "email": "andi@lms.local",
+      "password": "pbkdf2_sha256$600000$abcd1234abcd1234$xyz123xyz123xyz123",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2025-01-14T09:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 1,
+    "fields": {
+      "name": "Pemrograman Web",
+      "description": "Belajar membuat aplikasi web dengan Django dan Python",
+      "price": 50000,
+      "teacher": 2,
+      "image": null,
+      "created_at": "2025-01-15T10:00:00Z",
+      "updated_at": "2025-01-15T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 2,
+    "fields": {
+      "name": "Basis Data",
+      "description": "Belajar SQL dan database relasional",
+      "price": 45000,
+      "teacher": 2,
+      "image": null,
+      "created_at": "2025-01-20T11:00:00Z",
+      "updated_at": "2025-01-20T11:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 3,
+    "fields": {
+      "name": "Algoritma",
+      "description": "Belajar algoritma dan struktur data",
+      "price": 40000,
+      "teacher": 3,
+      "image": null,
+      "created_at": "2025-01-22T09:00:00Z",
+      "updated_at": "2025-01-22T09:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 4,
+    "fields": {
+      "name": "Jaringan Komputer",
+      "description": "Belajar networking dan protokol komunikasi",
+      "price": 55000,
+      "teacher": 3,
+      "image": null,
+      "created_at": "2025-01-25T14:00:00Z",
+      "updated_at": "2025-01-25T14:00:00Z"
+    }
+  },
+  {
+    "model": "courses.coursemember",
+    "pk": 1,
+    "fields": {
+      "course_id": 1,
+      "user_id": 4,
+      "roles": "std"
+    }
+  },
+  {
+    "model": "courses.coursemember",
+    "pk": 2,
+    "fields": {
+      "course_id": 1,
+      "user_id": 5,
+      "roles": "std"
+    }
+  },
+  {
+    "model": "courses.coursemember",
+    "pk": 3,
+    "fields": {
+      "course_id": 1,
+      "user_id": 6,
+      "roles": "std"
+    }
+  },
+  {
+    "model": "courses.coursemember",
+    "pk": 4,
+    "fields": {
+      "course_id": 2,
+      "user_id": 4,
+      "roles": "std"
+    }
+  },
+  {
+    "model": "courses.coursemember",
+    "pk": 5,
+    "fields": {
+      "course_id": 2,
+      "user_id": 5,
+      "roles": "ast"
+    }
+  },
+  {
+    "model": "courses.coursemember",
+    "pk": 6,
+    "fields": {
+      "course_id": 3,
+      "user_id": 4,
+      "roles": "std"
+    }
+  },
+  {
+    "model": "courses.coursemember",
+    "pk": 7,
+    "fields": {
+      "course_id": 3,
+      "user_id": 6,
+      "roles": "std"
+    }
+  },
+  {
+    "model": "courses.coursemember",
+    "pk": 8,
+    "fields": {
+      "course_id": 4,
+      "user_id": 5,
+      "roles": "std"
+    }
+  },
+  {
+    "model": "courses.coursecontent",
+    "pk": 1,
+    "fields": {
+      "name": "Pengenalan Django",
+      "description": "Memahami struktur dan konsep dasar Django",
+      "video_url": "https://www.youtube.com/watch?v=example1",
+      "file_attachment": null,
+      "course_id": 1,
+      "parent_id": null
+    }
+  },
+  {
+    "model": "courses.coursecontent",
+    "pk": 2,
+    "fields": {
+      "name": "Models dan ORM",
+      "description": "Belajar membuat model dan menggunakan ORM Django",
+      "video_url": "https://www.youtube.com/watch?v=example2",
+      "file_attachment": null,
+      "course_id": 1,
+      "parent_id": 1
+    }
+  },
+  {
+    "model": "courses.coursecontent",
+    "pk": 3,
+    "fields": {
+      "name": "Views dan URL Routing",
+      "description": "Membuat views dan mengatur routing URL",
+      "video_url": null,
+      "file_attachment": null,
+      "course_id": 1,
+      "parent_id": 1
+    }
+  },
+  {
+    "model": "courses.coursecontent",
+    "pk": 4,
+    "fields": {
+      "name": "Template Django",
+      "description": "Menggunakan Django template engine",
+      "video_url": null,
+      "file_attachment": null,
+      "course_id": 1,
+      "parent_id": 1
+    }
+  },
+  {
+    "model": "courses.coursecontent",
+    "pk": 5,
+    "fields": {
+      "name": "Introduction SQL",
+      "description": "Dasar-dasar SQL dan database",
+      "video_url": "https://www.youtube.com/watch?v=example3",
+      "file_attachment": null,
+      "course_id": 2,
+      "parent_id": null
+    }
+  },
+  {
+    "model": "courses.coursecontent",
+    "pk": 6,
+    "fields": {
+      "name": "CRUD Operations",
+      "description": "Membaca, membuat, mengubah dan menghapus data",
+      "video_url": null,
+      "file_attachment": null,
+      "course_id": 2,
+      "parent_id": 5
+    }
+  },
+  {
+    "model": "courses.comment",
+    "pk": 1,
+    "fields": {
+      "content_id": 1,
+      "member_id": 1,
+      "comment": "Penjelasan yang sangat jelas dan mudah dipahami!"
+    }
+  },
+  {
+    "model": "courses.comment",
+    "pk": 2,
+    "fields": {
+      "content_id": 1,
+      "member_id": 2,
+      "comment": "Bisa lebih detail tentang struktur project Django?"
+    }
+  },
+  {
+    "model": "courses.comment",
+    "pk": 3,
+    "fields": {
+      "content_id": 2,
+      "member_id": 3,
+      "comment": "Contoh-contoh sangat membantu dalam pembelajaran"
+    }
+  },
+  {
+    "model": "courses.comment",
+    "pk": 4,
+    "fields": {
+      "content_id": 5,
+      "member_id": 4,
+      "comment": "Pembelajaran SQL jadi lebih mudah"
+    }
+  },
+  {
+    "model": "courses.comment",
+    "pk": 5,
+    "fields": {
+      "content_id": 6,
+      "member_id": 4,
+      "comment": "Terima kasih contoh CRUD yang komprehensif"
+    }
+  }
+]
