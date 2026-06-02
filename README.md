@@ -1,26 +1,34 @@
 # 🎓 Simple LMS (Learning Management System)
 
-Simple LMS adalah aplikasi berbasis web yang dibangun menggunakan **Django** dan **PostgreSQL**, serta dijalankan menggunakan **Docker** untuk mempermudah deployment dan development.
+Simple LMS adalah aplikasi backend untuk sistem manajemen pembelajaran yang tangguh, dibangun menggunakan **Django Ninja** dan **PostgreSQL**, serta ditingkatkan dengan **Redis**, **MongoDB**, dan **Celery**. Proyek ini sepenuhnya dikontainerisasi menggunakan **Docker**.
 
 ---
 
 ## 🚀 Fitur Utama
 
-- Manajemen Course (Tambah, Edit, Hapus)
-- Upload gambar course
-- Admin panel Django
-- Database PostgreSQL
-- Containerized dengan Docker
+- **Manajemen Course**: CRUD Matakuliah, Konten, dan Anggota Kelas.
+- **Redis Caching**: Caching pada endpoint list dan detail course untuk performa tinggi.
+- **Rate Limiting**: Pembatasan akses (60 requests/minute) untuk menjaga stabilitas API.
+- **MongoDB Logging**: Pencatatan Activity Logs dan Learning Analytics secara real-time.
+- **Asynchronous Tasks**: Pemrosesan background tasks menggunakan Celery & RabbitMQ:
+  - Pengiriman email pendaftaran otomatis.
+  - Pembuatan sertifikat saat course selesai.
+  - Ekspor laporan course ke CSV secara async.
+  - Pembaruan statistik berkala via Celery Beat.
+- **Monitoring**: Dashboard Flower untuk memantau status antrian task.
 
 ---
 
 ## 🛠️ Teknologi yang Digunakan
 
-- Python 3.11
-- Django 5
-- PostgreSQL 15
-- Docker & Docker Compose
-- Pillow (untuk ImageField)
+- **Backend**: Python 3.11, Django 5, Django Ninja
+- **Database**: PostgreSQL 15 (Relational Data)
+- **NoSQL**: 
+  - **Redis 7**: Caching & Rate Limiting backend.
+  - **MongoDB 6**: Document storage untuk logs & analytics.
+- **Message Broker**: RabbitMQ (Task Queue)
+- **Task Runner**: Celery & Celery Beat
+- **Containerization**: Docker & Docker Compose
 
 ---
 
@@ -29,43 +37,51 @@ Simple LMS adalah aplikasi berbasis web yang dibangun menggunakan **Django** dan
 ```
 simple-lms/
 │── code/
-│   ├── manage.py
-│   ├── lms/
-│   └── courses/
+│   ├── core/           # Logic inti, auth, ratelimit, mongodb
+│   ├── courses/        # Manajemen data matakuliah & tasks
+│   ├── lms/            # Konfigurasi project & celery setup
+│   └── manage.py
+│── config/             # Konfigurasi tambahan
 │── docker-compose.yml
 │── Dockerfile
 │── requirements.txt
+└── DOCUMENTATION.md    # Detail arsitektur & strategi teknis
 ```
 
 ---
 
 ## ⚙️ Cara Menjalankan Project
 
-### 1. Clone Repository
+### 1. Persiapan Environment
+Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasinya:
 ```bash
-git clone https://github.com/raffi326/simple-lms.git
-cd simple-lms
+cp .env.example .env
 ```
 
-### 2. Jalankan Docker
+### 2. Jalankan Docker Compose
 ```bash
 docker compose up --build
 ```
 
-### 3. Jalankan Migration
+### 3. Inisialisasi Database
+Jalankan migrasi database di dalam container Django:
 ```bash
-docker exec -it django_app python code/manage.py migrate
+docker exec -it django_app python manage.py migrate
 ```
 
-### 4. Buat Superuser
+### 4. Buat Akun Admin
 ```bash
-docker exec -it django_app python code/manage.py createsuperuser
+docker exec -it django_app python manage.py createsuperuser
 ```
 
-### 5. Akses Aplikasi
+---
 
-- Website: http://localhost:8000  
-- Admin: http://localhost:8000/admin  
+## 🔗 Akses Aplikasi & Monitoring
+
+- **API Documentation (Swagger)**: [http://localhost:8000/api/v1/docs]
+- **Django Admin**: [http://localhost:8000/admin]
+- **Celery Monitoring (Flower)**: [http://localhost:5555]
+- **RabbitMQ Management**: [http://localhost:15672]
 
 ---
 
@@ -73,28 +89,18 @@ docker exec -it django_app python code/manage.py createsuperuser
 
 | Perintah | Fungsi |
 |--------|--------|
-| `docker compose up -d` | Menjalankan container di background |
-| `docker compose down` | Menghentikan container |
-| `docker ps` | Melihat container aktif |
-| `docker logs django_app` | Melihat log Django |
+| `docker compose up -d` | Menjalankan semua layanan di background |
+| `docker compose down` | Menghentikan semua layanan |
+| `docker compose logs -f web` | Melihat log aplikasi Django |
+| `docker compose logs -f celery-worker` | Melihat log proses background task |
 
 ---
 
-## ⚠️ Catatan
-
-- Pastikan Docker sudah terinstall
-- Jalankan migrate sebelum menggunakan aplikasi
-- Gunakan port 8000 untuk akses aplikasi
+## 📌 Dokumentasi Teknis
+Untuk detail mengenai arsitektur sistem, strategi caching, alur task, dan perintah CLI Redis/MongoDB, silakan merujuk ke [DOCUMENTATION.md](DOCUMENTATION.md).
 
 ---
 
-## 📌 Status Project
-
-✅ Development berjalan  
-✅ Docker setup berhasil  
-✅ Database terhubung  
-🚧 Masih dalam pengembangan
-
----
-
-
+## ⚠️ Catatan Pengembangan
+- Pastikan port 8000, 5555, 5672, 6379, dan 27017 tidak digunakan oleh aplikasi lain.
+- Gunakan koleksi Postman yang tersedia di root project untuk testing endpoint.

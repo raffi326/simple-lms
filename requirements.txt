@@ -5,3 +5,8 @@ pillow
 django-ninja
 django-ninja-jwt
 django-ninja-extra
+django-redis
+celery
+redis
+flower
+pymongo

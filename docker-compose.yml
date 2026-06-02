@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   db:
     image: postgres:15
@@ -22,6 +20,81 @@ services:
       - .env
     depends_on:
       - db
+      - redis
+      - mongodb
+      - rabbitmq
+
+  redis:
+    image: redis:7
+    container_name: redis_cache
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb_storage
+    restart: always
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env
+    volumes:
+      - mongodb_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_broker
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    env_file:
+      - .env
+
+  celery-worker:
+    build: .
+    container_name: celery_worker
+    command: celery -A lms worker --loglevel=info
+    volumes:
+      - .:/app
+    working_dir: /app/code
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+
+  celery-beat:
+    build: .
+    container_name: celery_beat
+    command: celery -A lms beat --loglevel=info
+    volumes:
+      - .:/app
+    working_dir: /app/code
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+
+  flower:
+    build: .
+    container_name: celery_flower
+    command: celery -A lms flower --port=5555
+    ports:
+      - "5555:5555"
+    working_dir: /app/code
+    env_file:
+      - .env
+    depends_on:
+      - celery-worker
 
 volumes:
   postgres_data:
+  redis_data:
+  mongodb_data:

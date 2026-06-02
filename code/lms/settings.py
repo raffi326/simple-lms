@@ -58,11 +58,11 @@ WSGI_APPLICATION = 'lms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME", "simple_lms"),
-        'USER': os.getenv("DB_USER", "root"),
-        'PASSWORD': os.getenv("DB_PASSWORD", ""),
-        'HOST': os.getenv("DB_HOST", "localhost"),
-        'PORT': os.getenv("DB_PORT", "5432"),
+        'NAME': os.getenv("POSTGRES_DB", "simple_lms"),
+        'USER': os.getenv("POSTGRES_USER", "postgres"),
+        'PASSWORD': os.getenv("POSTGRES_PASSWORD", "postgres"),
+        'HOST': os.getenv("POSTGRES_HOST", "db"),
+        'PORT': os.getenv("POSTGRES_PORT", "5432"),
     }
 }
 
@@ -80,3 +80,34 @@ NINJA_JWT = {
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
 }
+
+# Caching with Redis
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.getenv("REDIS_URL", "redis://redis:6379/1"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# Celery Configuration
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "pyamqp://guest:guest@rabbitmq:5672//")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Jakarta'
+
+from celery.schedules import crontab
+CELERY_BEAT_SCHEDULE = {
+    'update-course-stats-every-hour': {
+        'task': 'courses.tasks.update_course_statistics',
+        'schedule': crontab(minute=0, hour='*'), # Setiap jam
+    },
+}
+
+# MongoDB Configuration
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://mongodb:27017/")
+MONGO_DB_NAME = os.getenv("MONGO_DB_NAME", "simple_lms_logs")
