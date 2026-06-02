@@ -10,5 +10,6 @@ def home(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('api/', apiv1.urls),
+    path('api/', RedirectView.as_view(url='/api/v1/', permanent=False)),
+    path('api/v1/', apiv1.urls),
 ]
